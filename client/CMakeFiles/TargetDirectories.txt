@@ -1,0 +1,6 @@
+/Users/jiajunfu/Documents/GitHub/dalong_test/client/CMakeFiles/Client.dir
+/Users/jiajunfu/Documents/GitHub/dalong_test/client/CMakeFiles/edit_cache.dir
+/Users/jiajunfu/Documents/GitHub/dalong_test/client/CMakeFiles/rebuild_cache.dir
+/Users/jiajunfu/Documents/GitHub/dalong_test/client/clip-main/CMakeFiles/clip.dir
+/Users/jiajunfu/Documents/GitHub/dalong_test/client/clip-main/CMakeFiles/edit_cache.dir
+/Users/jiajunfu/Documents/GitHub/dalong_test/client/clip-main/CMakeFiles/rebuild_cache.dir

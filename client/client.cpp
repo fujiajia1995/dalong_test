@@ -12,6 +12,8 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <arpa/inet.h>
+#include <string>
+#include "clip-main/clip.h"
 
 void write_something(char *, int);
 void print_content(int sockfd);
@@ -63,12 +65,17 @@ void print_content(int sockfd){
     char buff[2000];
     bzero(buff,sizeof(buff));
     ssize_t n;
+    std::string OutputStr;
     std::cout << "reading from socket..." << std::endl;
     while (true) {
         if ((n = read(sockfd, buff, 2000)) <= 0){
             break;
         }
-        std::cout <<buff;
+        std::string TempStr(buff);
+        OutputStr = OutputStr+TempStr;
+        //std::cout <<TempStr;
     }
+    clip::set_text(OutputStr);
+    std::cout << OutputStr;
 }
 
