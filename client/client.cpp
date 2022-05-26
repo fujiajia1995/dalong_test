@@ -42,7 +42,7 @@ int main(int argc, char** argv){
     write_something(argv[1], sockfd);
     shutdown(sockfd, SHUT_WR);
     print_content(sockfd);
-    close(sockfd);
+    //close(sockfd);
     return 0;
     
         
