@@ -37,7 +37,6 @@ int main(int argc, char** argv){
     if(sig == -1){
         std::cout << "connect error" << std::endl ;
     }
-    
     write_something(argv[1], sockfd);
     shutdown(sockfd, SHUT_WR);
     print_content(sockfd);
@@ -48,22 +47,28 @@ int main(int argc, char** argv){
 }
 
 void write_something(char * str1, int sockfd){
-    int len = sizeof(str1);
-    char buff[100];
+    int length;
+    for(length = 0; str1[length] != '\0' ;length++){}
+    length++;
+    char buff[1000];
     ssize_t n;
-    std::cout << "writting..." << std::endl;
-    while (write(sockfd, str1, len) != len){
+    while (write(sockfd, str1, length) != length){
         std::cout << 2 <<std::endl;
-        std::cout << "error"  << std::endl;
+        std::cout << "error while writting..."  << std::endl;
     }
     }
 
 
 void print_content(int sockfd){
-    char buff[100];
+    char buff[2000];
+    bzero(buff,sizeof(buff));
     ssize_t n;
     std::cout << "reading from socket..." << std::endl;
-    while ((n = read(sockfd, buff, 100) > 0)) {
-        std::cout << buff << std::endl;
+    while (true) {
+        if ((n = read(sockfd, buff, 2000)) <= 0){
+            break;
+        }
+        std::cout <<buff;
     }
 }
+

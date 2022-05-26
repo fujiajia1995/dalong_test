@@ -45,6 +45,7 @@ int main(int argc, const char * argv[]) {
         if ((child_pid = fork() ) ==0){
             close(listenfd);
             file_return(connfd,connfd);
+            
             exit(0);
         }
         close(connfd);
@@ -80,7 +81,8 @@ void file_return(int in_socketfd,int out_socketfd){
     ssize_t n;
     ssize_t x;
     char filename[100];
-    char *buff = new char[100];
+    bzero(filename , sizeof(filename));
+    char *buff = new char[3000];
     int filefd;
     
     size_t cur = 0;
@@ -100,30 +102,38 @@ void file_return(int in_socketfd,int out_socketfd){
     char *file;
     file = cut(filename);
     filefd = open(file, O_RDONLY);
-    std::cout << "open file  " << file << filename<< "..."<< std::endl;
+    std::cout << "open file  " << filename<< "..."<< std::endl;
     if(filefd == -1){
         std::cout << "open file error" << std::endl;
     }
+    int old = 0;
     size_t read_cur = 0;
-    size_t read_remain = 100;
+    size_t read_remain = 3000;
     while ((x = read(filefd, buff+read_cur, remain))>0){
+        old= read_cur;
         read_cur = read_cur  + x;
-        read_remain = read_remain - read_cur;
-        if (read_cur > 98){
+        read_remain = read_remain - x;
+        if (read_cur > 2998){
+            //shutdown(out_socketfd, SHUT_WR);
             break;
         }
         if (read_remain < 0){
+            //shutdown(out_socketfd, SHUT_WR);
             break;
         }
-        std::cout << buff;
-        std::cout << "read file end"<< endl;
-        std::cout << "writting" <<std::endl;
-        if ((write(out_socketfd,buff,x)) != x ){
-            std::cout << buff << std::endl;
+        std::cout << "writting..." <<std::endl;
+        if ((write(out_socketfd,buff+old,x)) == x ){
+            std::cout << buff+old << std::endl;
+        }else{
+            if (x==0){
+                std::cout<< "end" << std::endl;
+            }else{
             std::cout <<"error" <<endl;
             exit(-1);
+            }
         }
         std::cout << "writting end" << std::endl;
     }
     
 }
+
